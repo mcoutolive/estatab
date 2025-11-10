@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple, Union
 from scipy.stats import norm
 from scipy.stats import t as t_dist
-from utils import HomocedasticidadeF
+from .utils import HomocedasticidadeF
 
 
 class TesteHipoteseBase:

@@ -1,5 +1,6 @@
-"""Top-level package for estatab."""
+"""Esse módulo exporta as funcionalidades do pacote estatab."""
 
-__author__ = """Murilo Couto de Oliveira"""
-__email__ = 'murilo.couto-oliveira@usp.br'
-__version__ = '0.1.0'
+from .core import HipoteseSimplificada
+from .utils import HomocedasticidadeF
+
+__all__ = ['HipoteseSimplificada', 'HomocedasticidadeF']

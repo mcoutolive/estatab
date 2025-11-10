@@ -1,6 +1,5 @@
 """Módulo para teste de homocedasticidade usando o teste F (variâncias iguais)."""
 
-from __future__ import annotations
 from dataclasses import dataclass
 from math import isfinite
 from typing import Optional
