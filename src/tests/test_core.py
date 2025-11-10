@@ -3,6 +3,6 @@
 import pytest
 from estatab import HipoteseSimplificada
 
-# def test_aleatorio():
-#     a = 0
-#     assert a == 0
+def test_aleatorio():
+    a = 0
+    assert a == 0
