@@ -1,18 +1,17 @@
-# estatab
+# EstatAB
 
-![PyPI version](https://img.shields.io/pypi/v/estatab.svg)
-[![Documentation Status](https://readthedocs.org/projects/estatab/badge/?version=latest)](https://estatab.readthedocs.io/en/latest/?version=latest)
+<!-- ![PyPI version](https://img.shields.io/pypi/v/estatab.svg) -->
+![Last release](https://img.shields.io/badge/release-0.1.0-green.svg "Latest release: 0.1.0")
+![Python](https://img.shields.io/badge/Python-3.11-blue.svg "Python")
 
-Software usado para execução de testes A/B/n.
+<!-- Software usado para execução de testes A/B/n.
 
 * PyPI package: https://pypi.org/project/estatab/
 * Free software: MIT License
-* Documentation: https://estatab.readthedocs.io.
+* Documentation: https://estatab.readthedocs.io. -->
 
-## Features
+## Release Notes
 
-* TODO
-
-## Credits
-
-This package was created with [Cookiecutter](https://github.com/audreyfeldroy/cookiecutter) and the [audreyfeldroy/cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage) project template.
+| Versão | Data | Adicionado | Melhorado | Corrigido |
+|--------|------|------------|-----------|-----------|
+| 0.1.0  | 2025-11-10 | Adição das primeiras classes do projeto. | | |
