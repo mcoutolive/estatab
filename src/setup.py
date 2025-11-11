@@ -13,11 +13,14 @@ setup(
     packages=find_namespace_packages(include=['estatab', 'estatab.*'], where='src'),
     include_package_data=True,
     install_requires=[
-        'pytest>=7.3.0',
         'joblib',
+        'numpy==2.3.4',
+        'pytest',
         'pytest-cov',
         'pytest-mock',
-        'pytest-randomly'],
+        'pytest-randomly',
+        'scipy==1.16.3',
+    ],
     entry_points={
         'console_scripts': [],
     },

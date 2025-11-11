@@ -204,3 +204,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 *cov.xml
+*.vscode
+*.gitignore
+CONTRIBUTING.md
