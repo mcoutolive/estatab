@@ -1,0 +1,64 @@
+[project]
+name = "estatab"
+version = "0.1.0"
+description = "Software usado para execução de testes A/B/n."
+readme = "README.md"
+authors = [
+  {name = "Murilo Couto de Oliveira", email = "murilo.couto-oliveira@usp.br"}
+]
+maintainers = [
+  {name = "Murilo Couto de Oliveira", email = "murilo.couto-oliveira@usp.br"}
+]
+classifiers = [
+    # TODO
+]
+license = {text = "MIT"}
+dependencies = [
+  "typer"
+]
+requires-python = ">= 3.10"
+
+[project.optional-dependencies]
+test = [
+    "coverage",  # testing
+    "pytest",  # testing
+    "ruff",  # linting
+    "mypy", # checking types
+    "ipdb", # debugging
+]
+
+[project.urls]
+bugs = "https://github.com/mcoutolive/estatab/issues"
+changelog = "https://github.com/mcoutolive/estatab/blob/master/changelog.md"
+homepage = "https://github.com/mcoutolive/estatab"
+
+[project.scripts]
+estatab = "estatab.cli:app"
+
+[tool.ty]
+# All rules are enabled as "error" by default; no need to specify unless overriding.
+# Example override: relax a rule for the entire project (uncomment if needed).
+# rules.TY015 = "warn"  # For invalid-argument-type, warn instead of error.
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+
+[tool.uv]
+package = true
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

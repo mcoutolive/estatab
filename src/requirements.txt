@@ -1,0 +1,7 @@
+joblib
+numpy==2.3.4
+pytest
+pytest-cov
+pytest-mock
+pytest-randomly
+scipy==1.16.3
