@@ -93,19 +93,23 @@ class TesteHipoteseBase:
             raise ValueError("numero_amostras deve ser ≥ 1.")
 
         if valor_media < 0:
-            raise ValueError(f"A média não pode ser negativa. Valor inserido: {valor_media}")
+            raise ValueError(
+                f"A média não pode ser negativa. Valor inserido: {valor_media}")
 
         if self.__tipo_metrica in ["proporcao", "conversao"] and not (0 <= valor_media <= 1):
-            raise ValueError(f"Para proporção/conversão, a média deve estar em [0,1]. Valor: {valor_media}")
+            raise ValueError(
+                f"Para proporção/conversão, a média deve estar em [0,1]. Valor: {valor_media}")
 
         if self.__tipo_metrica in ["numerica", "media"]:
             if desvio_padrao is None:
-                raise ValueError("Para métrica numérica, desvio_padrao não pode ser None.")
+                raise ValueError(
+                    "Para métrica numérica, desvio_padrao não pode ser None.")
             if desvio_padrao < 0:
                 raise ValueError("desvio_padrao não pode ser negativo.")
         else:
             # proporção/conversão: desvio calculado via p*(1-p)/n (erro-padrão da média)
-            desvio_padrao = math.sqrt((valor_media * (1 - valor_media)) / max(numero_amostras, 1))
+            desvio_padrao = math.sqrt(
+                (valor_media * (1 - valor_media)) / max(numero_amostras, 1))
 
         registro = {
             "nomeVariante": nome_variante,
@@ -120,7 +124,8 @@ class TesteHipoteseBase:
 
         if variante_controle:
             if self.__variante_controle is not None:
-                raise ValueError("Já existe uma variante de controle definida.")
+                raise ValueError(
+                    "Já existe uma variante de controle definida.")
             self.__variante_controle = nome_variante
 
         return self.__variantes
@@ -181,7 +186,8 @@ class TesteHipoteseBase:
 
         n = len(x)
         if n < 2:
-            raise ValueError("É preciso n ≥ 2 para estimar variâncias/covariâncias.")
+            raise ValueError(
+                "É preciso n ≥ 2 para estimar variâncias/covariâncias.")
 
         def media(v: List[float]) -> float:
             return sum(v) / len(v)
@@ -198,16 +204,17 @@ class TesteHipoteseBase:
         vy = variancia_amostral(y, my)
         covxy = cov_amostral(x, mx, y, my)
 
-        R = mx / my
+        r = mx / my
         # Var(R) ≈ (∂R/∂mx)^2 Var(mx) + (∂R/∂my)^2 Var(my) + 2(∂R/∂mx)(∂R/∂my)Cov(mx,my)
         var_mx = vx / n
         var_my = vy / n
         cov_mx_my = covxy / n
 
-        var_R = (1 / (my ** 2)) * var_mx + (mx ** 2 / my ** 4) * var_my - 2 * (mx / (my ** 3)) * cov_mx_my
-        dp_R = math.sqrt(max(var_R, 0.0))
+        var_r = (1 / (my ** 2)) * var_mx + (mx ** 2 / my ** 4) * \
+            var_my - 2 * (mx / (my ** 3)) * cov_mx_my
+        dp_r = math.sqrt(max(var_r, 0.0))
 
-        return n, R, dp_R
+        return n, r, dp_r
 
 
 class HipoteseSimplificada(TesteHipoteseBase):
@@ -252,9 +259,11 @@ class HipoteseSimplificada(TesteHipoteseBase):
         super().__init__(tipo_metrica, alfa)
         # validações resumidas
         if intencao_teste not in ["detectar_aumento", "detectar_reducao", "detectar_diferenca"]:
-            raise ValueError("intencao_teste deve ser: detectar_aumento|detectar_reducao|detectar_diferenca")
+            raise ValueError(
+                "intencao_teste deve ser: detectar_aumento|detectar_reducao|detectar_diferenca")
         if metodologia not in ["frequentista", "testes_sequenciais"]:
-            raise ValueError("metodologia deve ser: frequentista|testes_sequenciais")
+            raise ValueError(
+                "metodologia deve ser: frequentista|testes_sequenciais")
         if tipo_correcao not in ["Bonferroni", "Holm-Bonferroni", "Sidak"]:
             raise ValueError("tipo_correcao inválido.")
         if fator_inflacao not in ["Pocock", "O'Brien-Fleming"]:
@@ -336,7 +345,8 @@ class HipoteseSimplificada(TesteHipoteseBase):
             nome_variante=nome_variante,
             numero_amostras=numero_amostras,
             valor_media=float(valor_media),
-            desvio_padrao=None if desvio_padrao is None else float(desvio_padrao),
+            desvio_padrao=None if desvio_padrao is None else float(
+                desvio_padrao),
             variante_controle=variante_controle,
         )
         self.__variantes_internas = json.loads(self.variantes)
@@ -379,7 +389,8 @@ class HipoteseSimplificada(TesteHipoteseBase):
         k = max(len(pvalores), 1)
         alfa_limite = alfa / k
         p_ajust = [min(p * k, 1.0) for p in pvalores]
-        rejeita = [p <= alfa_limite for p in pvalores]   # ou p_ajust[i] <= alfa
+        # ou p_ajust[i] <= alfa
+        rejeita = [p <= alfa_limite for p in pvalores]
         alfa_corrigido = [alfa_limite] * k
         return {"p_ajustado": p_ajust, "rejeita": rejeita, "alfa_corrigido": alfa_corrigido}
 
@@ -406,7 +417,8 @@ class HipoteseSimplificada(TesteHipoteseBase):
         if k == 0:
             return {"p_ajustado": [], "rejeita": [], "alfa_corrigido": []}
 
-        ordenacao = sorted(range(k), key=lambda i: pvalores[i])   # índices por p crescente
+        # índices por p crescente
+        ordenacao = sorted(range(k), key=lambda i: pvalores[i])
         p_ordenado = [pvalores[i] for i in ordenacao]
 
         ajust_ordenado = [0.0] * k
@@ -467,8 +479,10 @@ class HipoteseSimplificada(TesteHipoteseBase):
         if sum(1 for v in self.__variantes_internas if v["varianteControle"]) != 1:
             raise ValueError("Deve haver exatamente UMA variante de controle.")
 
-        controle = next(v for v in self.__variantes_internas if v["varianteControle"])
-        tratamentos = [v for v in self.__variantes_internas if not v["varianteControle"]]
+        controle = next(
+            v for v in self.__variantes_internas if v["varianteControle"])
+        tratamentos = [
+            v for v in self.__variantes_internas if not v["varianteControle"]]
 
         # testes sequenciais (se escolhido)
         alfa_efetivo = self.alfa
@@ -483,7 +497,8 @@ class HipoteseSimplificada(TesteHipoteseBase):
                 data_inicio_experimento=self.__data_inicio_experimento,
                 data_fim_experimento=self.__data_fim_experimento,
                 tamanho_amostral_calculado=self.__tamanho_amostral_calculado,
-                tamanho_amostral_atual=sum(v["numeroAmostras"] for v in self.__variantes_internas),
+                tamanho_amostral_atual=sum(
+                    v["numeroAmostras"] for v in self.__variantes_internas),
                 funcao_gasto_alfa=self.__funcao_gasto_alfa,
             )
             self.__informacoes_testes_sequenciais = info
@@ -498,13 +513,16 @@ class HipoteseSimplificada(TesteHipoteseBase):
 
         # Correção múltipla
         pvalores = [r["pvalor"] for r in resultados]
-        correcoes = self.__aplica_correcao_multiplos_testes(pvalores, alfa_efetivo, self.__tipo_correcao)
+        correcoes = self.__aplica_correcao_multiplos_testes(
+            pvalores, alfa_efetivo, self.__tipo_correcao)
 
         for i, r in enumerate(resultados):
             r["pvalorAjustado"] = float(correcoes["p_ajustado"][i])
-            r["alfaCorrigido"] = correcoes["alfa_corrigido"][i]   # pode ser None no Holm
+            # pode ser None no Holm
+            r["alfaCorrigido"] = correcoes["alfa_corrigido"][i]
             r["rejeitaH0Corrigido"] = bool(correcoes["rejeita"][i])
-            r["conclusaoCorrigida"] = self.__conclusao(r["rejeitaH0Corrigido"], r["efeito"], self.__intencao_teste)
+            r["conclusaoCorrigida"] = self.__conclusao(
+                r["rejeitaH0Corrigido"], r["efeito"], self.__intencao_teste)
 
         conclusoes_corrigidas = [r["conclusaoCorrigida"] for r in resultados]
 
@@ -702,14 +720,15 @@ class HipoteseSimplificada(TesteHipoteseBase):
             erro = math.sqrt((s1**2) / n1 + (s2**2) / n2)
             # gl de Welch:
             num = ((s1**2) / n1 + (s2**2) / n2) ** 2
-            den = ((s1**2) / n1) ** 2 / (n1 - 1) + ((s2**2) / n2) ** 2 / (n2 - 1)
+            den = ((s1**2) / n1) ** 2 / (n1 - 1) + \
+                ((s2**2) / n2) ** 2 / (n2 - 1)
             gl = num / den
 
         if erro == 0:
             return 0.0, 1.0
 
         t_est = (m2 - m1) / erro
-        
+
         if intencao == "detectar_diferenca":
             p = 2 * min(t_dist.cdf(t_est, gl), t_dist.sf(t_est, gl))
         elif intencao == "detectar_aumento":
@@ -820,7 +839,8 @@ class TesteSequencialGrupo(TesteHipoteseBase):
         Faz parsing robusto de datas em formatos comuns.
         Levanta ValueError se nenhum formato for aceito.
         """
-        formatos = ["%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y", "%Y/%m/%d", "%Y.%m.%d"]
+        formatos = ["%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y",
+                    "%d.%m.%Y", "%Y/%m/%d", "%Y.%m.%d"]
         for f in formatos:
             try:
                 return datetime.strptime(s, f)
@@ -866,22 +886,26 @@ class TesteSequencialGrupo(TesteHipoteseBase):
 
         # 3) Completude para gasto de alfa (com inflação)
         n_desenhado_inflado = n_desenhado * max(fator, 1e-12)
-        t_gasto = max(min(tamanho_amostral_atual / n_desenhado_inflado, 1.0), 0.0)
+        t_gasto = max(min(tamanho_amostral_atual /
+                      n_desenhado_inflado, 1.0), 0.0)
 
         # 4) Gasto de alfa
         fg = funcao_gasto_alfa.lower()
         if fg == "linear":
             alfa_acumulado = self.alfa_linear(t_gasto, self.alfa)
         elif fg == "potencia":
-            alfa_acumulado = self.alfa_potencia(t_gasto, self.alfa, self.__valor_lambda)
+            alfa_acumulado = self.alfa_potencia(
+                t_gasto, self.alfa, self.__valor_lambda)
         elif fg == "exponencial":
-            alfa_acumulado = self.alfa_exponencial(t_gasto, self.alfa, self.__valor_lambda)
+            alfa_acumulado = self.alfa_exponencial(
+                t_gasto, self.alfa, self.__valor_lambda)
         elif fg in ["pocock"]:
             alfa_acumulado = self.alfa_pocock(t_gasto, self.alfa)
         elif fg in ["o'brien-fleming", "obrien_fleming"]:
             alfa_acumulado = self.alfa_obrien_fleming(t_gasto, self.alfa)
         else:
-            raise ValueError(f"funcao_gasto_alfa inválida: {funcao_gasto_alfa}")
+            raise ValueError(
+                f"funcao_gasto_alfa inválida: {funcao_gasto_alfa}")
 
         return {
             "numeroTestesSequenciaisRealizados": n_interinos,
@@ -920,5 +944,8 @@ class TesteSequencialGrupo(TesteHipoteseBase):
             return float(((z_estrela + z_beta) / (z_alfa + z_beta)) ** 2)
 
         # O'Brien-Fleming: aproximação simples por k
+        if k > 4:
+            raise ValueError(
+                "O fator de inflação O'Brien-Fleming não é suportado para mais de 4 análises interinas.")
         tabela = {1: 1.01, 2: 1.02, 3: 1.02, 4: 1.03}
         return float(tabela.get(max(min(k, 4), 1), 1.03))

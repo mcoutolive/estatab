@@ -1,0 +1,14 @@
+{
+    "name": "estatab",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "apps/web"
+    ],
+    "scripts": {
+        "web:dev": "npm run dev -w apps/web",
+        "web:build": "npm run build -w apps/web",
+        "web:start": "npm run start -w apps/web",
+        "web:lint": "npm run lint -w apps/web"
+    }
+}

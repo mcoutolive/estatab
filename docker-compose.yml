@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/estatab-src/src
+      - ./apps/api:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - estatab-network
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - api
+    networks:
+      - estatab-network
+
+networks:
+  estatab-network:
+    driver: bridge
