@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstatAB - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0d6efd;
+            --primary-blue-dark: #0a58ca;
+            --light-gray: #f8f9fa;
+        }
+        body { background-color: var(--light-gray); }
+        .navbar { background-color: var(--primary-blue); }
+        .navbar-brand { font-weight: 800; color: white !important; }
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EstatAB</a>
+        </div>
+    </nav>
+    <header class="hero-section">
+        <h1>EstatAB: Plataforma corporativa de experimentação estatística</h1>
+        <p>Testes sequenciais, controle rigoroso de significância estatística e decisões auditáveis.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="config.html" class="btn btn-light btn-lg">Criar experimento</a>
+        </div>
+    </header>
+    <main class="container py-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Testes Sequenciais</h5>
+                        <p class="card-text text-muted">Acompanhe seus experimentos em tempo real com funções de gasto de alfa.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Múltiplas Comparos</h5>
+                        <p class="card-text text-muted">Correções de Bonferroni, Holm-Bonferroni e Sidák para controle do erro tipo I.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Decisões Auditáveis</h5>
+                        <p class="card-text text-muted">Relatórios estatísticos detalhados para embasar suas decisões de produto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

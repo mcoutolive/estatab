@@ -7,10 +7,11 @@ __author__ = 'Murilo Couto de Oliveira'
 __email__ = 'murilo.couto-oliveira@usp.br'
 
 setup(
-    name='estatab',
+    name='EstatAB',
     version=__version__,
     url='https://github.com/mcoutolive/estatab',
-    packages=find_namespace_packages(include=['estatab', 'estatab.*'], where='src'),
+    packages=find_namespace_packages(
+        include=['estatab', 'estatab.*'], where='src'),
     include_package_data=True,
     install_requires=[
         'joblib',

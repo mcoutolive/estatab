@@ -1,7 +1,7 @@
 [project]
-name = "estatab"
+name = "EstatAB"
 version = "0.1.0"
-description = "Software usado para execução de testes A/B/n."
+description = "EstatAB - Software usado para execução de testes A/B/n."
 readme = "README.md"
 authors = [
   {name = "Murilo Couto de Oliveira", email = "murilo.couto-oliveira@usp.br"}
@@ -14,9 +14,12 @@ classifiers = [
 ]
 license = {text = "MIT"}
 dependencies = [
-  "typer"
+  "typer",
+  "joblib",
+  "numpy==2.3.4",
+  "scipy==1.16.3"
 ]
-requires-python = ">= 3.10"
+requires-python = ">= 3.12.10"
 
 [project.optional-dependencies]
 test = [
